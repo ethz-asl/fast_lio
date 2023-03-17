@@ -285,6 +285,20 @@ void ImuProcess::UndistortPcl(const MeasureGroup &meas, esekfom::esekf<state_ikf
     }
     double &&offs_t = tail->header.stamp.toSec() - pcl_beg_time;
     IMUpose.push_back(set_pose6d(offs_t, acc_s_last, angvel_last, imu_state.vel, imu_state.pos, imu_state.rot.toRotationMatrix()));
+    {
+      static tf::TransformBroadcaster br;
+      tf::Transform transform;
+      transform.setOrigin(
+          tf::Vector3(imu_state.pos[0], imu_state.pos[1], imu_state.pos[2]));
+      tf::Quaternion q;
+      q.setX(imu_state.rot.coeffs()[0]);
+      q.setY(imu_state.rot.coeffs()[1]);
+      q.setZ(imu_state.rot.coeffs()[2]);
+      q.setW(imu_state.rot.coeffs()[3]);
+      transform.setRotation(q);
+      br.sendTransform(tf::StampedTransform(transform, tail->header.stamp,
+                                            "camera_init", "imu_forward_prop"));
+    }
   }
 
   /*** calculated the pos and attitude prediction at the frame-end ***/
