@@ -286,18 +286,39 @@ void ImuProcess::UndistortPcl(const MeasureGroup &meas, esekfom::esekf<state_ikf
     double &&offs_t = tail->header.stamp.toSec() - pcl_beg_time;
     IMUpose.push_back(set_pose6d(offs_t, acc_s_last, angvel_last, imu_state.vel, imu_state.pos, imu_state.rot.toRotationMatrix()));
     {
+      // Gravity align the estimated pose
+      static Eigen::Quaterniond grav_q;
+      static bool grav_is_initialized = false;
+      if (!grav_is_initialized) {
+        grav_is_initialized = true;
+        const Eigen::Vector3d grav_e_n = imu_state.grav.get_vect().normalized();
+        const Eigen::Vector3d grav = -Eigen::Vector3d::UnitZ();
+        grav_q = Eigen::Quaterniond::FromTwoVectors(grav_e_n, grav);
+        grav_q.normalize();
+      }
+      const Eigen::Quaterniond r_m(imu_state.rot.w(), imu_state.rot.x(),
+                                   imu_state.rot.y(), imu_state.rot.z());
+      const Eigen::Quaterniond r_g = grav_q * r_m;
+      const Eigen::Vector3d p_g = grav_q * imu_state.pos;
+
+      // Publish forward propagated IMU pose as msg and TF
       static tf::TransformBroadcaster br;
-      tf::Transform transform;
-      transform.setOrigin(
-          tf::Vector3(imu_state.pos[0], imu_state.pos[1], imu_state.pos[2]));
-      tf::Quaternion q;
-      q.setX(imu_state.rot.coeffs()[0]);
-      q.setY(imu_state.rot.coeffs()[1]);
-      q.setZ(imu_state.rot.coeffs()[2]);
-      q.setW(imu_state.rot.coeffs()[3]);
-      transform.setRotation(q);
-      br.sendTransform(tf::StampedTransform(transform, tail->header.stamp,
-                                            "camera_init", "imu_forward_prop"));
+      static ros::Publisher transform_pub =
+          ros::NodeHandle("~").advertise<geometry_msgs::TransformStamped>(
+              "imu_forward_prop", 100);
+      geometry_msgs::TransformStamped msg;
+      msg.header.stamp = tail->header.stamp;
+      msg.header.frame_id = "camera_init";
+      msg.transform.translation.x = p_g.x();
+      msg.transform.translation.y = p_g.y();
+      msg.transform.translation.z = p_g.z();
+      msg.transform.rotation.x = r_g.x();
+      msg.transform.rotation.y = r_g.y();
+      msg.transform.rotation.z = r_g.z();
+      msg.transform.rotation.w = r_g.w();
+      msg.child_frame_id = "imu_forward_prop";
+      br.sendTransform(msg);
+      transform_pub.publish(msg);
     }
   }
 
