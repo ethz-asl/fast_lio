@@ -95,6 +95,9 @@ bool   lidar_pushed, flg_first_scan = true, flg_exit = false, flg_EKF_inited;
 bool   scan_pub_en = false, dense_pub_en = false, scan_body_pub_en = false;
 int lidar_type;
 
+Eigen::Quaterniond grav_q;
+bool grav_is_initialized = false;
+
 vector<vector<int>>  pointSearchInd_surf; 
 vector<BoxPointType> cub_needrm;
 vector<PointVector>  Nearest_Points; 
@@ -542,14 +545,29 @@ void publish_map(const ros::Publisher & pubLaserCloudMap)
 template<typename T>
 void set_posestamp(T & out)
 {
-    out.pose.position.x = state_point.pos(0);
-    out.pose.position.y = state_point.pos(1);
-    out.pose.position.z = state_point.pos(2);
-    out.pose.orientation.x = geoQuat.x;
-    out.pose.orientation.y = geoQuat.y;
-    out.pose.orientation.z = geoQuat.z;
-    out.pose.orientation.w = geoQuat.w;
-    
+
+    // Gravity align the estimated pose
+    if (!grav_is_initialized) {
+        grav_is_initialized = true;
+        const Eigen::Vector3d grav_e_n = state_point.grav.get_vect().normalized();
+        const Eigen::Vector3d grav = -Eigen::Vector3d::UnitZ();
+        grav_q = Eigen::Quaterniond::FromTwoVectors(grav_e_n, grav);
+        grav_q.normalize();
+    }
+
+    const Eigen::Quaterniond r_m(state_point.rot.coeffs()[3], state_point.rot.coeffs()[0],
+                                state_point.rot.coeffs()[1], state_point.rot.coeffs()[2]);
+    Eigen::Quaterniond r_g = grav_q * r_m;
+    r_g.normalize();
+    const Eigen::Vector3d p_g = grav_q * state_point.pos;
+
+    out.pose.position.x = p_g(0);
+    out.pose.position.y = p_g(1);
+    out.pose.position.z = p_g(2);
+    out.pose.orientation.x = r_g.coeffs()[0];
+    out.pose.orientation.y = r_g.coeffs()[1];
+    out.pose.orientation.z = r_g.coeffs()[2];
+    out.pose.orientation.w = r_g.coeffs()[3];
 }
 
 void publish_odometry(const ros::Publisher & pubOdomAftMapped)

@@ -3,11 +3,11 @@
 
     <arg name="rviz" default="false" />
 
-    <rosparam command="load" file="$(find fast_lio)/config/rs_omav.yaml" />
+    <rosparam command="load" file="$(find fast_lio)/config/rs.yaml" />
 
     <param name="feature_extract_enable" type="bool" value="0"/>
-    <param name="point_filter_num" type="int" value="1"/>
-    <param name="max_iteration" type="int" value="5" />
+    <param name="point_filter_num" type="int" value="2"/>
+    <param name="max_iteration" type="int" value="4" />
     <param name="filter_size_surf" type="double" value="0.5" />
     <param name="filter_size_map" type="double" value="0.5" />
     <param name="cube_side_length" type="double" value="1000" />
@@ -18,7 +18,7 @@
         <!-- Config -->
         <rosparam file="$(find fast_lio)/config/airy_omav_msf.yaml" command="load"/>
         <!-- Remap -->
-        <remap from="msf_core/imu_state_input" to="/imu"/> <!--$(arg rovio_imu_topic)"/ -->
+        <remap from="msf_core/imu_state_input" to="/imu"/> 
         <remap from="msf_updates/odometry_input" to="/Odometry"/>
     </node>
 

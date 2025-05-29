@@ -101,7 +101,7 @@ Visualization Manager:
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
-        - Alpha: 0.029999999329447746
+        - Alpha: 0.07000000029802322
           Autocompute Intensity Bounds: true
           Autocompute Value Bounds:
             Max Value: 15
@@ -124,7 +124,7 @@ Visualization Manager:
           Size (Pixels): 1
           Size (m): 0.009999999776482582
           Style: Points
-          Topic: /cloud_registered
+          Topic: /cloud_registered_body
           Unreliable: false
           Use Fixed Frame: true
           Use rainbow: true
@@ -333,7 +333,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 18.96942901611328
+      Distance: 22.00533103942871
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -346,12 +346,12 @@ Visualization Manager:
         Z: 0
       Focal Shape Fixed Size: false
       Focal Shape Size: 0.05000000074505806
-      Invert Z Axis: true
+      Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.11039885133504868
+      Pitch: 0.8497963547706604
       Target Frame: global
-      Yaw: 4.468615531921387
+      Yaw: 1.4604272842407227
     Saved: ~
 Window Geometry:
   Displays:
@@ -369,5 +369,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 3840
-  X: 1687
-  Y: 194
+  X: 0
+  Y: 54
