@@ -20,13 +20,13 @@ pose_sensor/pose_noise_meas_p: 0.005
 pose_sensor/pose_noise_meas_q: 0.0005
 
 # ######### EXTRINSICS (PoseSensor) #######
-pose_sensor/init/q_ic/x: 0.933012
-pose_sensor/init/q_ic/y: -0.2500007
-pose_sensor/init/q_ic/z: -0.0669909
-pose_sensor/init/q_ic/w: 0.2500008
-pose_sensor/init/p_ic/x: 0.057503
-pose_sensor/init/p_ic/y: 0.0503409
-pose_sensor/init/p_ic/z: 0.0419726
+pose_sensor/init/q_ic/x: 0.9976398
+pose_sensor/init/q_ic/y: 0.0013471
+pose_sensor/init/q_ic/z: 0.0485442
+pose_sensor/init/q_ic/w: 0.0485442
+pose_sensor/init/p_ic/x: 0
+pose_sensor/init/p_ic/y: 0.0426823
+pose_sensor/init/p_ic/z: 0.0889862
 
 
 pose_sensor/pose_fixed_scale: true

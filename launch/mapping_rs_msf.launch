@@ -26,4 +26,6 @@
     <node launch-prefix="nice" pkg="rviz" type="rviz" name="rviz" args="-d $(find fast_lio)/rviz_cfg/loam_livox.rviz" />
     </group>
 
+    <node pkg="tf2_ros" type="static_transform_publisher" name="rs_lidar_imu_tf" args="0 0 0.01 -0.7071068 0.7071068 0 0 body rs_lidar"/>
+
 </launch>

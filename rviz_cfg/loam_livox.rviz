@@ -16,6 +16,9 @@ Panels:
         - /Odometry1/Odometry1/Covariance1/Orientation1
         - /PointCloud21
         - /MarkerArray1/Namespaces1
+        - /TF1
+        - /TF1/Frames1
+        - /TF1/Tree1
       Splitter Ratio: 0.6432291865348816
     Tree Height: 1786
   - Class: rviz/Selection
@@ -196,17 +199,17 @@ Visualization Manager:
           Topic: /Odometry
           Unreliable: false
           Value: true
-      Enabled: true
+      Enabled: false
       Name: Odometry
     - Alpha: 1
       Class: rviz/Axes
-      Enabled: true
+      Enabled: false
       Length: 0.699999988079071
       Name: Axes
       Radius: 0.10000000149011612
       Reference Frame: <Fixed Frame>
       Show Trail: false
-      Value: true
+      Value: false
     - Alpha: 0
       Buffer Length: 2
       Class: rviz/Path
@@ -298,12 +301,36 @@ Visualization Manager:
       Queue Size: 100
       Value: false
     - Class: rviz/MarkerArray
-      Enabled: true
+      Enabled: false
       Marker Topic: /normal_markers
       Name: MarkerArray
       Namespaces:
         {}
       Queue Size: 100
+      Value: false
+    - Class: rviz/TF
+      Enabled: true
+      Frame Timeout: 1000
+      Frames:
+        All Enabled: false
+        body:
+          Value: true
+        camera_init:
+          Value: false
+        rs_lidar:
+          Value: true
+      Marker Alpha: 1
+      Marker Scale: 1
+      Name: TF
+      Show Arrows: true
+      Show Axes: true
+      Show Names: true
+      Tree:
+        camera_init:
+          body:
+            rs_lidar:
+              {}
+      Update Interval: 0
       Value: true
   Enabled: true
   Global Options:
@@ -333,7 +360,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 22.00533103942871
+      Distance: 1.606713056564331
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -341,17 +368,17 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: 0
-        Y: 0
-        Z: 0
+        X: -0.11908621340990067
+        Y: 0.10008063167333603
+        Z: 0.22506558895111084
       Focal Shape Fixed Size: false
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.8497963547706604
+      Pitch: 0.49479663372039795
       Target Frame: global
-      Yaw: 1.4604272842407227
+      Yaw: 6.118610858917236
     Saved: ~
 Window Geometry:
   Displays:
@@ -369,5 +396,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 3840
-  X: 0
+  X: 2196
   Y: 54
