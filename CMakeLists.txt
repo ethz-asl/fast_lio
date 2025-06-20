@@ -60,13 +60,6 @@ find_package(PCL 1.8 REQUIRED)
 
 message(Eigen: ${EIGEN3_INCLUDE_DIR})
 
-include_directories(
-	${catkin_INCLUDE_DIRS} 
-  ${EIGEN3_INCLUDE_DIR}
-  ${PCL_INCLUDE_DIRS}
-  ${PYTHON_INCLUDE_DIRS}
-  include)
-
 add_message_files(
   FILES
   Pose6D.msg
@@ -76,6 +69,14 @@ generate_messages(
  DEPENDENCIES
  geometry_msgs
 )
+
+include_directories(
+	${catkin_INCLUDE_DIRS} 
+  ${EIGEN3_INCLUDE_DIR}
+  ${PCL_INCLUDE_DIRS}
+  ${PYTHON_INCLUDE_DIRS}
+  include)
+
 
 catkin_package(
   CATKIN_DEPENDS geometry_msgs nav_msgs roscpp rospy std_msgs message_runtime
