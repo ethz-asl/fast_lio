@@ -1,4 +1,5 @@
 core/msf_output_frame: camera_init # Output frame.
+core/tf_target_frame: state_lio
 core/data_playback: false
 core/fixed_bias: 0
 
