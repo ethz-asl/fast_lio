@@ -1,13 +1,21 @@
 core/msf_output_frame: camera_init # Output frame.
 core/tf_target_frame: state_lio
-core/data_playback: false
+core/data_playback: true
 core/fixed_bias: 0
 
 ######### IMU PARAMETERS #######
-core/core_noise_acc: 0.1
-core/core_noise_accbias: 0.2
-core/core_noise_gyr: 0.015
-core/core_noise_gyrbias: 0.02 
+# core/core_noise_acc: 0.2
+# core/core_noise_accbias: 0.1
+# core/core_noise_gyr: 0.015
+# core/core_noise_gyrbias: 0.02 
+
+core/core_noise_acc: 0.001  # [m/s^2/sqrt(Hz)] 
+core/core_noise_gyr: 0.00005       # [rad/s/sqrt(Hz)] 
+
+core/core_fixed_bias: false
+core/core_noise_accbias: 1e-5     # [m/s^3/sqrt(Hz)]
+core/core_noise_gyrbias: 1e-5     # [rad/s^2/sqrt(Hz)]
+
 
 ######### POSE SENSOR PARAMETERS #######
 pose_sensor/fixed_scale: 1.0
@@ -16,9 +24,9 @@ pose_sensor/pose_noise_p_wv: 0.0
 pose_sensor/pose_noise_q_wv: 0.0
 pose_sensor/pose_noise_q_ic: 0.0
 pose_sensor/pose_noise_p_ic: 0.0
-pose_sensor/pose_delay: 0
-pose_sensor/pose_noise_meas_p: 0.005
-pose_sensor/pose_noise_meas_q: 0.0005
+pose_sensor/pose_delay: 0.0
+pose_sensor/pose_noise_meas_p: 0.0005
+pose_sensor/pose_noise_meas_q: 0.0001
 
 # ######### EXTRINSICS (PoseSensor) #######
 pose_sensor/init/q_ic/x: 0.9976398
